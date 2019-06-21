@@ -86,9 +86,9 @@ app.post('/signup', (req, res) => {
   console.log(req.body);
   models.Users.create(req.body)
     .then(() => {
-      res.render('index');
+      res.redirect('/');
     }).catch(()=> {
-      res.render('signup');
+      res.redirect('/signup');
     });
 });
 
@@ -108,8 +108,6 @@ app.post('/login', (req, res) => {
   }).catch(()=> {
     res.render('index');
   });
-  
-  // models.Users.compare(req.body.password, models.Users.get({username : req.body.username}, models.Users.get({})) )
 });
 
 /************************************************************/
