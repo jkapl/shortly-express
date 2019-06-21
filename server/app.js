@@ -101,12 +101,12 @@ app.post('/login', (req, res) => {
 
   models.Users.get({username:req.body.username}).then((val)=> {
     if (models.Users.compare(req.body.password, val.password, val.salt)) {
-      res.render('index');
+      res.redirect('/');
     } else {
-      res.render('signup');
+      res.redirect('/login');
     }
   }).catch(()=> {
-    res.render('index');
+    res.redirect('/login');
   });
 });
 
