@@ -92,8 +92,24 @@ app.post('/signup', (req, res) => {
     });
 });
 
+app.get('/login', (req, res) => {
+  res.render('login');
+});
+
 app.post('/login', (req, res) => {
+  console.log(req.body);
+
+  models.Users.get({username:req.body.username}).then((val)=> {
+    if (models.Users.compare(req.body.password, val.password, val.salt)) {
+      res.render('index');
+    } else {
+      res.render('signup');
+    }
+  }).catch(()=> {
+    res.render('index');
+  });
   
+  // models.Users.compare(req.body.password, models.Users.get({username : req.body.username}, models.Users.get({})) )
 });
 
 /************************************************************/
