@@ -84,8 +84,12 @@ app.get('/signup', (req, res) => {
 
 app.post('/signup', (req, res) => {
   console.log(req.body);
-  models.Users.create(req.body);
-  res.send('ok');
+  models.Users.create(req.body)
+    .then(() => {
+      res.render('index');
+    }).catch(()=> {
+      res.render('signup');
+    });
 });
 
 app.post('/login', (req, res) => {
