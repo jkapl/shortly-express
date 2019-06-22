@@ -7,16 +7,23 @@ module.exports.createSession = (req, res, next) => {
     models.Sessions.create()
       .then((sess) => models.Sessions.get({ id: sess.insertId }))
       .then((data) => {
-        // res.cookie('shortlyid', data.hash)
-        res.cookies = { shortlyid: data.hash };
+        res.cookie('shortlyid', data.hash);
+        // res.cookies = { shortlyid: data.hash };
         req.session = { hash: data.hash };
         // console.log(res.cookies)
+        // res.send(req);
         next();
       })
       .catch((err) => {
         // console.log(err);
       });
-    // res.send();
+    
+  } else {
+    models.Sessions.get({hash:req.cookies['shortlyid']})
+      .then((sess)=>{
+        req.session = { hash: sess.hash };
+        next();
+      });
   }
   // next();
 
